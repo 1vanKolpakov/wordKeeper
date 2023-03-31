@@ -1,12 +1,24 @@
-import { ChangeEvent, useState } from "react"
+import searchSlice, { searchWords } from "@/redux/searchSlice"
+import { ChangeEvent, useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
+import { debounce} from 'lodash'
 
 export default function SearchBar() {
+  const dispatch = useDispatch()
+
   const [searchWord, setSearchWord] = useState('')
+
+  const handleSearch = debounce((query: string) => {
+    dispatch(searchWords(query))
+  }, 500)
+  useEffect(() => {
+    handleSearch(searchWord)
+  }, [searchWord])
+
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value)
     setSearchWord(e.target.value)
   }
-  // const dispatch = useDispatch()
 
   return (
     <form className="flex items-center px-4 py-8">

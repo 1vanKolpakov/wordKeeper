@@ -1,6 +1,6 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore, Middleware } from "@reduxjs/toolkit";
 import { dictionaryReducer } from "./dictionarySlice";
-import favouritesSlice from "./favouritesSlice";
+import favouritesSlice, { addWord } from "./favouritesSlice";
 import searchSlice from "./searchSlice";
 
 const rooReducer = combineReducers({
@@ -9,17 +9,24 @@ const rooReducer = combineReducers({
   search: searchSlice,
 });
 
-const saveFavouritesWords = (store) => (next) => (action) => {
-  if( action.type === 'favorites/addFavorite') {
-    const favoritesWords = store.getState().favorites.words;
-    localStorage.setitem('favoritesWords', JSON.stringify(favoritesWords))
-  }
-  return next(action)
-}
+// const saveFavouritesWords: Middleware<{}, RootState> = ({getState}) => (next) => (action) => {
+
+//   if( action.type === 'favorites/addWord') {
+//     const favoritesWords = store.getState().favorites.words;
+//     localStorage.setItem('favorites', JSON.stringify(favoritesWords))
+
+//     setTimeout(() => {
+//       const updateFavorites = store.getState().favorites.words;
+//       localStorage.setItem('favorites', JSON.stringify(updateFavorites));
+//       store.dispatch({type: 'favorites/updated', payload: updateFavorites})
+//     }, 1000)
+//   }
+//   return next(action)
+// }
 
 const store = configureStore({
   reducer: rooReducer,
-  middleware: [saveFavouritesWords]
+  // middleware: [saveFavouritesWords]
 })
 
 export type RootState = ReturnType<typeof rooReducer>;

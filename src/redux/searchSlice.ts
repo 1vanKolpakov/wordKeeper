@@ -52,20 +52,6 @@ const searchSlice = createSlice({
         state.results = action.payload;
       })
   }
-  //   searchWordsStart(state) {
-  //     state.loading = true;
-  //     state.error = null
-  //   },
-  //   searchWordSuccess(state, action: PayloadAction<Word[]>) {
-  //     state.results = action.payload;
-  //     state.loading = false;
-  //     state.error = null
-  //   },
-  //   searchWordFailure(state, action: PayloadAction<string>) {
-  //     state.loading = false;
-  //     state.error = action.payload
-  //   },
-  // },
 });
 
 export const {

@@ -1,22 +1,23 @@
-import searchSlice, { searchWords } from "@/redux/searchSlice"
+import { useDebounce } from "@/hooks/useDebounce"
+import { searchWords } from "@/redux/searchSlice"
+import { AppDispatch } from "@/redux/store"
 import { ChangeEvent, useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { debounce} from 'lodash'
 
 export default function SearchBar() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
 
   const [searchWord, setSearchWord] = useState('')
+  const debouncedSearch = useDebounce(searchWord, 1000)
 
-  const handleSearch = debounce((query: string) => {
-    dispatch(searchWords(query))
-  }, 500)
   useEffect(() => {
-    handleSearch(searchWord)
-  }, [searchWord])
+    console.log('search', debouncedSearch)
+    if(searchWord !== ''){
+    dispatch(searchWords(debouncedSearch))
+    }
+  }, [debouncedSearch])
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value)
     setSearchWord(e.target.value)
   }
 

@@ -6,8 +6,11 @@ export default function Home() {
   return (
     <div>
       <Header />
+      <div className='shrink-0 flex max-sm:flex-col justify-center w-full  '>
       <SearchBar />
       <Results />
+      </div>
+      
     </div>
   )
 }

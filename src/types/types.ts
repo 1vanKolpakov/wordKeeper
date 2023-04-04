@@ -12,3 +12,5 @@ export interface Meaning {
 export interface Definition {
   definition: string;
 }
+
+Fa

@@ -1,6 +1,6 @@
 import { combineReducers, configureStore, Middleware } from "@reduxjs/toolkit";
 import { dictionaryReducer } from "./dictionarySlice";
-import favouritesSlice, { addToFavourites } from "./favouritesSlice";
+import favouritesSlice from "./favouritesSlice";
 import searchSlice from "./searchSlice";
 
 const rooReducer = combineReducers({

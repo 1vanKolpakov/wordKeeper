@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Word } from "./dictionarySlice";
 import { RootState } from "./store";
 
 
@@ -19,16 +18,16 @@ const favouritesSlice = createSlice({
   name: 'favourites',
   initialState,
   reducers: {
-    addToFavourites: (state, action: PayloadAction<FavouriteWord>) => {
-      state.favouriteWords.push(action.payload)
-    },
-    removeFromFavourites: (state, action: PayloadAction<string>) => {
-      state.favouriteWords = state.favouriteWords.filter((word) => word.word !== action.payload)
-    },
+    // addToFavourites: (state, action: PayloadAction<FavouriteWord>) => {
+    //   state.favouriteWords.push(action.payload)
+    // },
+    // removeFromFavourites: (state, action: PayloadAction<string>) => {
+    //   state.favouriteWords = state.favouriteWords.filter((word) => word.definition !== action.payload)
+    // },
   },
 })
 
-export const {addToFavourites, removeFromFavourites} = favouritesSlice.actions;
+// export const { removeFromFavourites} = favouritesSlice.actions;
 export default favouritesSlice.reducer
 
 export const selectFavourites = (state: RootState) => state.favorites.favouriteWords;

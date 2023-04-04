@@ -1,12 +1,16 @@
+import FavouriteWordsSearchBar from "@/components/FavouriteWords/FavouriteSearchBar";
+import FavouriteWordsResult from "@/components/FavouriteWords/FavouriteWordsResult";
 import Header from "@/components/Header";
 
 export default function Starred() {
   return (
     <>
     <Header />
-    <h1 className="text-3xl font-bold underline bg-yellow-500 text-blue-600">
-    Hello world!
-  </h1>
+    <div className='shrink-0 flex max-sm:flex-col justify-center w-full  '>
+    <FavouriteWordsSearchBar />
+    <FavouriteWordsResult />
+    </div>
+    
   </>
   )
 }

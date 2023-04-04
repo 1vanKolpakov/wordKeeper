@@ -1,10 +1,12 @@
-export interface Word {
-  id: number;
-  term: string;
-  partOfSpeech: string;
-  definition: string;
-  pronunciation: string;
-}
+// export interface Word {
+//   id: number;
+//   term: string;
+//   partOfSpeech: string;
+//   definition: string;
+//   pronunciation: string;
+// }
+
+import { Word } from "../dictionarySlice";
 
 // export type WordState = {
 //   allWords: Word[];
@@ -20,6 +22,11 @@ export interface RootState {
     loading: Boolean;
   };
   favourites: Word[];
+  dictionary: {
+    allWords: Word[];
+    searchTerm: string;
+    filterPartOfSpeech: string;
+  }
 }
 
 // export interface Action<T> {

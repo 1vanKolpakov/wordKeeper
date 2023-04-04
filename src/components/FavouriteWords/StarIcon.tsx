@@ -1,41 +1,41 @@
-import { addWords } from "@/redux/dictionarySlice";
-import { FavouriteWord } from "@/redux/favouritesSlice";
+import { addWords, removeFromFavourites, Word } from "@/redux/dictionarySlice";
+import { FavouriteWord, selectFavourites } from "@/redux/favouritesSlice";
 import { FC, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import StarRateIcon from "@mui/icons-material/StarRate";
 
-const AddToFavorite: FC = () => {
+const AddToFavorite: FC<{word: Word}> = ({word}) => {
   const dispatch = useDispatch();
 
-  const [favourites, setFavourites] = useState<FavouriteWord[]>([]);
+  // const [favourites, setFavourites] = useState<FavouriteWord[]>([]);
 
-  // useEffect(() => {
-  //   const savedFavourites = localStorage.getItem("favourites");
-  //   if (savedFavourites) {
-  //     const favouritesFromLocalStorage: FavouriteWord[] =
-  //       JSON.parse(savedFavourites);
-  //     console.log("in local stor", favouritesFromLocalStorage);
-  //     setFavourites(favouritesFromLocalStorage);
-  //     dispatch(addWords(favouritesFromLocalStorage));
-  //   }
-  // }, []);
+  const savedFavourites = localStorage.getItem("favourites");
+  const favourites: FavouriteWord[] = JSON.parse(savedFavourites || '[]')
 
-  // const isFavourite = (word: FavouriteWord) => {
-  //   return favourites.some((fav) => {
-  //     return fav.definition === word.definition;
-  //   });
-  // };
+  const removeFromLocalStorage = (word: FavouriteWord) => {
+    
+    const updatedFavourites = favourites.filter(
+      (fav) => !(fav.definition === word.definition)
+    );
+    localStorage.setItem("favourites", JSON.stringify(updatedFavourites));
+  };
+
+  const handleRemoveFromFavourites = (word: FavouriteWord) => {
+    console.log('delete', word)
+    dispatch(removeFromFavourites(word));
+      removeFromLocalStorage(word);
+  }
   return (
     <div className=" flex justify-end ml-2 ">
       <span className=" hover:cursor-pointer">
         <StarRateIcon
-          // onClick={() =>
-          //   handleToFavourites({
-          //     definition: word.definition,
-          //     word: el.word,
-          //     partOfSpeech: one.partOfSpeech,
-          //   })
-          // }
+          onClick={() =>
+            handleRemoveFromFavourites({
+              definition: word.definition,
+              word: word.word,
+              partOfSpeech: word.partOfSpeech,
+            })
+          }
           sx={{
             "&:hover": {
               color: "primary.main",
@@ -44,7 +44,7 @@ const AddToFavorite: FC = () => {
           }}
         />
       </span>
-      </div>
+    </div>
   );
 };
 

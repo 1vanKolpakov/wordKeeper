@@ -1,29 +1,33 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Word } from "./dictionarySlice";
 import { RootState } from "./store";
 
-export interface FavouritesState {
-  words: Word[]
-}
 
+export type FavouriteWord = {
+  word: string;
+  partOfSpeech: string;
+  definition: string;
+}
+export interface FavouritesState {
+  favouriteWords: FavouriteWord[]
+}
 const initialState: FavouritesState = {
-  words: []
+  favouriteWords: []
 }
 
 const favouritesSlice = createSlice({
   name: 'favourites',
   initialState,
   reducers: {
-    addWord: (state, action: PayloadAction<Word>) => {
-      state.words.push(action.payload)
-    },
-    removeWord: (state, action: PayloadAction<number>) => {
-      state.words = state.words.filter((word) => word.id !== action.payload)
-    },
+    // addToFavourites: (state, action: PayloadAction<FavouriteWord>) => {
+    //   state.favouriteWords.push(action.payload)
+    // },
+    // removeFromFavourites: (state, action: PayloadAction<string>) => {
+    //   state.favouriteWords = state.favouriteWords.filter((word) => word.definition !== action.payload)
+    // },
   },
 })
 
-export const {addWord, removeWord} = favouritesSlice.actions;
+// export const { removeFromFavourites} = favouritesSlice.actions;
 export default favouritesSlice.reducer
 
-export const selectFavourites = (state: RootState) => state.favorites.words;
+export const selectFavourites = (state: RootState) => state.favorites.favouriteWords;

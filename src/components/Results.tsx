@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import { FC, useEffect, useState } from "react";
-import type { FavouriteWord } from "../redux/favouritesSlice";
 import { Definition, Meaning, SearchResult } from "@/types/types";
 import {
   addToFavourites,
@@ -11,6 +10,7 @@ import {
   removeFromFavourites,
 } from "@/redux/dictionarySlice";
 import WordList from "./WordList";
+import { FavouriteWord } from "@/redux/types";
 
 const Results: FC = () => {
   const dispatch = useDispatch();
@@ -39,7 +39,7 @@ const Results: FC = () => {
     localStorage.setItem("favourites", JSON.stringify(updatedFavourites));
     setFavourites(updatedFavourites);
   };
-console.log(searchResults)
+  console.log(searchResults);
   const removeFromLocalStorage = (word: FavouriteWord) => {
     const updatedFavourites = favourites.filter(
       (fav) => !(fav.definition === word.definition)

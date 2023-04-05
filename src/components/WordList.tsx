@@ -20,7 +20,7 @@ const WordList: FC<Props> = ({ el, one, word }) => {
         <span className=" font-bold">{el.word}</span>
       <span className="italic ml-2">{one.partOfSpeech}</span>
       <span className="ml-2 overflow-x-hidden">{word.definition}</span>
-      <span className="block font-bold justify-center flex">{el.phonetic}</span>
+      <span className="flex font-bold justify-center">{el.phonetic}</span>
         </>
       ) : (
         <>

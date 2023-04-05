@@ -2,8 +2,6 @@ import { Word } from "@/redux/dictionarySlice";
 import { FC, useState } from "react";
 import AddToFavorite from "./StarIcon";
 
-type WordsOrder = number[];
-
 interface Props {
   filteredWords: Word[];
   selectedPartOfSpeech: string[];
@@ -32,19 +30,21 @@ const FavouriteWordsResult: FC<Props> = ({
     setCurrentWordIndex(null);
   };
 
-  const dragOverHandler = (e: React.DragEvent<HTMLDivElement>, index: number) => {
+  const dragOverHandler = (
+    e: React.DragEvent<HTMLDivElement>,
+    index: number
+  ) => {
     e.preventDefault();
   };
 
   const dropHandler = (e: React.DragEvent<HTMLDivElement>, index: number) => {
-  const dragIndex = parseInt(e.dataTransfer.getData("text/plain"));
-  const dragWordIndex = wordsOrder[dragIndex];
-  const newWordsOrder = [...wordsOrder];
-  newWordsOrder.splice(dragIndex, 1);
-  newWordsOrder.splice(index, 0, dragWordIndex);
-  setWordsOrder(newWordsOrder);
-};
-
+    const dragIndex = parseInt(e.dataTransfer.getData("text/plain"));
+    const dragWordIndex = wordsOrder[dragIndex];
+    const newWordsOrder = [...wordsOrder];
+    newWordsOrder.splice(dragIndex, 1);
+    newWordsOrder.splice(index, 0, dragWordIndex);
+    setWordsOrder(newWordsOrder);
+  };
 
   const filteredAndSortedWords = filteredWords
     .filter((word) => {
@@ -68,19 +68,10 @@ const FavouriteWordsResult: FC<Props> = ({
         <div
           key={`${word.word}-${filteredWords.indexOf(word)}`}
           draggable
-          onDragStart={(e) =>
-            dragStartHandler(
-              e,
-              filteredWords.indexOf(word)
-            )
-          }
+          onDragStart={(e) => dragStartHandler(e, filteredWords.indexOf(word))}
           onDragEnd={dragEndHandler}
-          onDragOver={(e) =>
-            dragOverHandler(e, filteredWords.indexOf(word))
-          }
-          onDrop={(e) =>
-            dropHandler(e, filteredWords.indexOf(word))
-          }
+          onDragOver={(e) => dragOverHandler(e, filteredWords.indexOf(word))}
+          onDrop={(e) => dropHandler(e, filteredWords.indexOf(word))}
           className="flex justify-between p-4 m-3 border bg-white rounded"
         >
           <div className="overflow-x-hidden">

@@ -1,13 +1,11 @@
 import { removeFromFavourites, Word } from "@/redux/dictionarySlice";
-import { FavouriteWord } from "@/redux/favouritesSlice";
 import { FC } from "react";
 import { useDispatch } from "react-redux";
 import StarRateIcon from "@mui/icons-material/StarRate";
+import { FavouriteWord } from "@/redux/types";
 
 const AddToFavorite: FC<{ word: Word }> = ({ word }) => {
   const dispatch = useDispatch();
-
-  // const [favourites, setFavourites] = useState<FavouriteWord[]>([]);
 
   const savedFavourites = localStorage.getItem("favourites");
   const favourites: FavouriteWord[] = JSON.parse(savedFavourites || "[]");
@@ -20,7 +18,6 @@ const AddToFavorite: FC<{ word: Word }> = ({ word }) => {
   };
 
   const handleRemoveFromFavourites = (word: FavouriteWord) => {
-    console.log("delete", word);
     dispatch(removeFromFavourites(word));
     removeFromLocalStorage(word);
   };

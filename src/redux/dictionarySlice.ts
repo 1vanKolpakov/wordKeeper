@@ -3,7 +3,6 @@ import { RootState } from "./store";
 
 export interface DictionaryState {
   allWords: Word[];
-  // starredWords: Word[];
   searchTerm: string;
   filterPartOfSpeech: string;
 }

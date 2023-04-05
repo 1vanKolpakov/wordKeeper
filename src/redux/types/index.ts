@@ -1,19 +1,4 @@
-// export interface Word {
-//   id: number;
-//   term: string;
-//   partOfSpeech: string;
-//   definition: string;
-//   pronunciation: string;
-// }
-
 import { Word } from "../dictionarySlice";
-
-// export type WordState = {
-//   allWords: Word[];
-//   starredWords: Word[];
-//   searchTerm: string;
-//   filterPartOfSpeech: string;
-// }
 
 export interface RootState {
   search: {
@@ -26,11 +11,11 @@ export interface RootState {
     allWords: Word[];
     searchTerm: string;
     filterPartOfSpeech: string;
-  }
+  };
 }
 
-// export interface Action<T> {
-//   type: string;
-//   payload?: T;
-// }
-
+export type FavouriteWord = {
+  word: string;
+  partOfSpeech: string;
+  definition: string;
+}

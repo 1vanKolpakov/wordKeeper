@@ -1,7 +1,7 @@
 import { selectAllWords } from "@/redux/dictionarySlice";
-import { AppDispatch, RootState } from "@/redux/store";
-import { ChangeEvent, FC, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { ChangeEvent, FC } from "react";
+import { useSelector } from "react-redux";
 
 const FavouriteWordsSearchBar: FC<{
   handleSearchTherm: (e: ChangeEvent<HTMLInputElement>) => void;

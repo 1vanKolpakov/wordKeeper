@@ -12,6 +12,12 @@ export interface Word {
   definition: string;
   word: string;
 }
+export interface FilteredWords {
+  id: number;
+  partOfSpeech: string;
+  definition: string;
+  word: string;
+}
 const initialState: DictionaryState = {
   allWords: [],
   searchTerm: "",

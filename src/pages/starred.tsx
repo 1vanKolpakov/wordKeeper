@@ -15,20 +15,15 @@ export default function Starred() {
   const filterHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const partOfSpeech = e.target.value;
 
-    console.log("partOfSpeech", partOfSpeech);
-
     const newSelector = selectedPartOfSpeech.includes(partOfSpeech)
       ? selectedPartOfSpeech.filter((p) => p !== partOfSpeech)
       : [...selectedPartOfSpeech, partOfSpeech];
 
     setSelectedPartOfSpeech(newSelector);
-
-    console.log("afterChangeSelector", selectedPartOfSpeech);
   };
 
   const handleSearchTherm = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTherm(e.target.value);
-    console.log(searchTherm);
   };
 
   const words = useSelector((state: RootState) => selectAllWords(state));
@@ -43,7 +38,6 @@ export default function Starred() {
     .filter((word) =>
       word.word.toLowerCase().includes(searchTherm.toLowerCase())
     );
-  console.log("FILTERED", filteredWords, words);
   return (
     <>
       <Header />

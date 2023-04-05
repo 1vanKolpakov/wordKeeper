@@ -10,6 +10,7 @@ import {
   addWords,
   removeFromFavourites,
 } from "@/redux/dictionarySlice";
+import WordList from "./WordList";
 
 const Results: FC = () => {
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ const Results: FC = () => {
     localStorage.setItem("favourites", JSON.stringify(updatedFavourites));
     setFavourites(updatedFavourites);
   };
-
+console.log(searchResults)
   const removeFromLocalStorage = (word: FavouriteWord) => {
     const updatedFavourites = favourites.filter(
       (fav) => !(fav.definition === word.definition)
@@ -56,6 +57,7 @@ const Results: FC = () => {
       addToLocalStorage(word);
     }
   };
+
   return (
     <div className="max-sm:w-full max-sm:justify-center w-2/3">
       {searchResults.map((el: SearchResult, ind) => (
@@ -67,13 +69,7 @@ const Results: FC = () => {
                   className=" flex justify-between  p-4 m-3 border  bg-white rounded"
                   key={`${el.id}-${one.partOfSpeech}- ${index}`}
                 >
-                  <div className=" overflow-x-hidden">
-                    <span className=" font-bold">{el.word}</span>
-                    <span className="italic ml-2">{one.partOfSpeech}</span>
-                    <span className="ml-2 truncate overflow-x-hidden">
-                      {word.definition}
-                    </span>
-                  </div>
+                  <WordList el={el} one={one} word={word} />
                   <div className=" flex justify-end ml-2 ">
                     {isFavourite({
                       definition: word.definition,

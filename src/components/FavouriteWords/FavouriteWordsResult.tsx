@@ -1,64 +1,90 @@
 import { Word } from "@/redux/dictionarySlice";
 import { FC, useState } from "react";
 import AddToFavorite from "./StarIcon";
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
 type WordsOrder = number[];
 
-const FavouriteWordsResult: FC<{filteredWords: Word[]}> = ({filteredWords}) => {
-  const [wordsOrder, setWordsOrder] = useState(filteredWords)
-  // );
-  // console.log('wordsORDER', wordsOrder)
+interface Props {
+  filteredWords: Word[];
+  selectedPartOfSpeech: string[];
+  searchTherm: string;
+}
 
-  // const onDragEnd = (result: any) => {
-  //   if (!result.destination) {
-  //     return;
-  //   }
+const FavouriteWordsResult: FC<Props> = ({
+  filteredWords,
+  selectedPartOfSpeech,
+  searchTherm,
+}) => {
+  const [wordsOrder, setWordsOrder] = useState(
+    filteredWords.map((word, index) => index)
+  );
+  const [currentWordIndex, setCurrentWordIndex] = useState<any>(null);
 
-  //   const { source, destination } = result;
+  const dragStartHandler = (
+    e: React.DragEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    setCurrentWordIndex(index);
+    e.dataTransfer.setData("text/plain", index.toString());
+  };
 
-  //   const newWordsOrder = Array.from(wordsOrder);
-  //   newWordsOrder.splice(source.index, 1);
-  //   newWordsOrder.splice(destination.index, 0, wordsOrder[source.index]);
+  const dragEndHandler = (e: React.DragEvent<HTMLDivElement>) => {
+    setCurrentWordIndex(null);
+  };
 
-  //   setWordsOrder(newWordsOrder);
-  // };
-  const [currentWord, setCurrentWord] = useState(null)
-  function dragStartHandler(e, word) {
-    console.log('DRAG', word)
-    setCurrentWord(word)
-  }
+  const dragOverHandler = (e: React.DragEvent<HTMLDivElement>, index: number) => {
+    e.preventDefault();
+  };
 
-  function dragEndHandler(e) {
-    // e.target.parentNode.parentNode.style.border = 'none'
-    e.target.style.background = 'white'
-  }
+  const dropHandler = (e: React.DragEvent<HTMLDivElement>, index: number) => {
+  const dragIndex = parseInt(e.dataTransfer.getData("text/plain"));
+  const dragWordIndex = wordsOrder[dragIndex];
+  const newWordsOrder = [...wordsOrder];
+  newWordsOrder.splice(dragIndex, 1);
+  newWordsOrder.splice(index, 0, dragWordIndex);
+  setWordsOrder(newWordsOrder);
+};
 
-  function dragOverHandler(e) {
-    e.preventDefault()
-    // e.target.parentNode.parentNode.style.border = '2px solid red'
-    e.target.style.background = 'lightgrey'
-    e.stopPropagation()
-  }
+
+  const filteredAndSortedWords = filteredWords
+    .filter((word) => {
+      if (selectedPartOfSpeech.length === 0) {
+        return true;
+      }
+      return selectedPartOfSpeech.includes(word.partOfSpeech);
+    })
+    .filter((word) =>
+      word.word.toLowerCase().includes(searchTherm.toLowerCase())
+    )
+    .sort((a, b) => {
+      const indexA = wordsOrder.indexOf(filteredWords.indexOf(a));
+      const indexB = wordsOrder.indexOf(filteredWords.indexOf(b));
+      return indexA - indexB;
+    });
 
   return (
     <div className="max-sm:w-full max-sm:justify-center w-2/3">
-      {wordsOrder.map((word, index) => (
-        <div 
-          onDragStart={(e) => dragStartHandler(e, word)}
-          onDragLeave={(e) => dragEndHandler(e)}
-          onDragEnd={(e) => dragEndHandler(e)}
-          onDragOver={(e) => dragOverHandler(e)}
-          // onDrop={(e) => dropHandler(e, word)}
-
-
-          draggable={true}
-          className=" flex justify-between  p-4 m-3 border  bg-white rounded"
-          key={`${word.partOfSpeech}- ${index}`}
+      {filteredAndSortedWords.map((word) => (
+        <div
+          key={`${word.word}-${filteredWords.indexOf(word)}`}
+          draggable
+          onDragStart={(e) =>
+            dragStartHandler(
+              e,
+              filteredWords.indexOf(word)
+            )
+          }
+          onDragEnd={dragEndHandler}
+          onDragOver={(e) =>
+            dragOverHandler(e, filteredWords.indexOf(word))
+          }
+          onDrop={(e) =>
+            dropHandler(e, filteredWords.indexOf(word))
+          }
+          className="flex justify-between p-4 m-3 border bg-white rounded"
         >
-          <div className=" overflow-x-hidden"
-          >
-            <span className=" font-bold">{word.word}</span>
+          <div className="overflow-x-hidden">
+            <span className="font-bold">{word.word}</span>
             <span className="italic ml-2">{word.partOfSpeech}</span>
             <span className="ml-2 truncate overflow-x-hidden">
               {word.definition}

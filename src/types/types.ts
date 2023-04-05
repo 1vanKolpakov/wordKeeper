@@ -2,6 +2,7 @@ export interface SearchResult {
   word: string;
   meanings: Meaning[]
   id:number;
+  phonetic: string;
 }
 
 export interface Meaning {
@@ -12,5 +13,3 @@ export interface Meaning {
 export interface Definition {
   definition: string;
 }
-
-Fa

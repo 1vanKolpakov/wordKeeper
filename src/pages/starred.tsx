@@ -52,7 +52,7 @@ export default function Starred() {
           filterHandler={filterHandler}
           handleSearchTherm={handleSearchTherm}
         />
-        <FavouriteWordsResult filteredWords={filteredWords} />
+        <FavouriteWordsResult filteredWords={filteredWords} selectedPartOfSpeech={selectedPartOfSpeech} searchTherm={searchTherm}  />
       </div>
     </>
   );

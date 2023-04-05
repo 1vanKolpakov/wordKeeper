@@ -9,7 +9,6 @@ export default function SearchBar() {
 
   const [searchWord, setSearchWord] = useState('')
   const debouncedSearch = useDebounce(searchWord, 1000)
-
   useEffect(() => {
     if(searchWord !== ''){
     dispatch(searchWords(debouncedSearch))

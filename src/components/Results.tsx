@@ -39,7 +39,6 @@ const Results: FC = () => {
     localStorage.setItem("favourites", JSON.stringify(updatedFavourites));
     setFavourites(updatedFavourites);
   };
-  console.log(searchResults);
   const removeFromLocalStorage = (word: FavouriteWord) => {
     const updatedFavourites = favourites.filter(
       (fav) => !(fav.definition === word.definition)

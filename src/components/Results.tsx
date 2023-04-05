@@ -5,7 +5,11 @@ import StarRateIcon from "@mui/icons-material/StarRate";
 import { FC, useEffect, useState } from "react";
 import type { FavouriteWord } from "../redux/favouritesSlice";
 import { Definition, Meaning, SearchResult } from "@/types/types";
-import { addToFavourites, addWords, removeFromFavourites } from "@/redux/dictionarySlice";
+import {
+  addToFavourites,
+  addWords,
+  removeFromFavourites,
+} from "@/redux/dictionarySlice";
 
 const Results: FC = () => {
   const dispatch = useDispatch();
@@ -16,8 +20,8 @@ const Results: FC = () => {
   useEffect(() => {
     const savedFavourites = localStorage.getItem("favourites");
     if (savedFavourites) {
-      const favouritesFromLocalStorage: FavouriteWord[] = JSON.parse(savedFavourites)
-      console.log('in local stor', favouritesFromLocalStorage)
+      const favouritesFromLocalStorage: FavouriteWord[] =
+        JSON.parse(savedFavourites);
       setFavourites(favouritesFromLocalStorage);
       dispatch(addWords(favouritesFromLocalStorage));
     }
@@ -25,9 +29,7 @@ const Results: FC = () => {
 
   const isFavourite = (word: FavouriteWord) => {
     return favourites.some((fav) => {
-      return (
-        fav.definition === word.definition
-      );
+      return fav.definition === word.definition;
     });
   };
 
@@ -39,7 +41,7 @@ const Results: FC = () => {
 
   const removeFromLocalStorage = (word: FavouriteWord) => {
     const updatedFavourites = favourites.filter(
-      (fav) => !( fav.definition === word.definition)
+      (fav) => !(fav.definition === word.definition)
     );
     localStorage.setItem("favourites", JSON.stringify(updatedFavourites));
     setFavourites(updatedFavourites);
@@ -47,11 +49,9 @@ const Results: FC = () => {
 
   const handleToFavourites = (word: FavouriteWord) => {
     if (isFavourite(word)) {
-      console.log(word)
       dispatch(removeFromFavourites(word));
       removeFromLocalStorage(word);
     } else {
-      console.log(word);
       dispatch(addToFavourites(word));
       addToLocalStorage(word);
     }
